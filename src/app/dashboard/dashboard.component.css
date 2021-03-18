@@ -17,6 +17,10 @@ input {
   margin-bottom: 10px;
 }
 
+button {
+    width: auto !important;
+}
+
 .button-margin {
   width: 50%;
 }

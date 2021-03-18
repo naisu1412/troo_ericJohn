@@ -16,26 +16,22 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
 import { Routes, RouterModule } from '@angular/router';
-import { UserService } from '../services/user.service';
 import { HumanizePipe } from './humanize.pipe';
 import { MessageComponent } from './message/message.component';
 import { MessageService } from '../services/message.service';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/dashboard' }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     DashboardComponent,
     HeaderComponent,
     HumanizePipe,
@@ -58,7 +54,7 @@ const appRoutes: Routes = [
     MessagesModule,
     MessageModule
   ],
-  providers: [EmployeeService, UserService, MessageService],
+  providers: [EmployeeService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

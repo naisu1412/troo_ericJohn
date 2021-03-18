@@ -11,11 +11,9 @@ export class EmployeeService {
       id: 0,
       firstName: 'Saido',
       lastName: 'Chesto',
-      country: 'Japan',
+      gender: 'Male',
       nationality: 'Japanese',
-      company: 'Facebook',
-      designation: 'Gym Instructor',
-      workExp: 99
+      birthDate: '11/11/2011'
     }
   ];
 

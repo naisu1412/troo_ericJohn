@@ -2,7 +2,6 @@ import { Employee } from '../../models/employee.model';
 import { EmployeeService } from '../../services/employee.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { Message } from 'primeng/components/common/api';
 import * as _ from 'lodash';
@@ -16,48 +15,41 @@ import * as _ from 'lodash';
 export class DashboardComponent implements OnInit {
   sidebarForm: FormGroup;
   display: boolean;
-  dataSource: any[];
+  nationality: any[];
+  gender: any[];
   employees: Employee[];
   cols: any[];
   newEmployee: Employee;
-  username = '';
   msgs: Message[] = [];
   lowerLeftNotification: Message[] = [];
-  uploadedFiles: any[] = [];
   formType: string;
 
   constructor(private employeeService: EmployeeService,
-              private userService: UserService,
               private router: Router) {}
 
   ngOnInit() {
-    this.userService.loggedInUserSubject.subscribe(user => {
-        this.username = user;
-    });
+    this.nationality = [
+      { label: 'Japanese', value: 'Japanese' },
+      { label: 'Chinese', value: 'Chinese' },
+      { label: 'Filipino', value: 'Filipino' },
+      { label: 'Spanish', value: 'Spanish' },
+      { label: 'English', value: 'English' }
+      ];
 
-    if (this.username === '') {
-      this.router.navigate(['login']);
-    }
-
-    this.dataSource = [
-      { label: 'Facebook', value: 'Facebook' },
-      { label: 'Google', value: 'Google' },
-      { label: 'Monster Gulf', value: 'Monster Gulf' },
-      { label: 'JobsDB', value: 'JobsDB' },
-      { label: 'Twitter', value: 'Twitter' }
+    this.gender = [
+      { label: '', value: '' },
+      { label: 'Male', value: 'Male' },
+      { label: 'Female', value: 'Female' },
+      { label: 'Secret', value: 'Secret' }
       ];
 
     this.sidebarForm = new FormGroup({
       id: new FormControl(null),
       firstName: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
-      country: new FormControl(null, Validators.required),
-      nationality: new FormControl(null, Validators.required),
-      company: new FormControl(null, Validators.required),
-      designation: new FormControl(null, Validators.required),
-      workExp: new FormControl(null, Validators.required),
-      cv: new FormControl(null),
-      dataSource: new FormControl(null)
+      gender: new FormControl(null, Validators.required),
+      birthDate: new FormControl(null, Validators.required),
+      nationality: new FormControl(null, Validators.required)
     });
 
     this.employees = this.employeeService.getEmployees();
@@ -103,7 +95,13 @@ export class DashboardComponent implements OnInit {
           this.employees[this.employees.indexOf(existingEmployee)] = this.sidebarForm.value;
         }
       } else {
-        this.sidebarForm.value.id = this.employees.sort((emp1, emp2) => emp1.id - emp2.id)[this.employees.length - 1].id + 1;
+        console.log("SIDEBAR FORM:");
+        console.log(this.sidebarForm);
+        if (this.employees.length > 0) {
+            this.sidebarForm.value.id = this.employees.sort((emp1, emp2) => emp1.id - emp2.id)[this.employees.length - 1].id + 1;
+        } else {
+            this.sidebarForm.value.id = 1;
+        }
         this.employees = [...this.employees, this.sidebarForm.value];
       }
       this.display = false;

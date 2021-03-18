@@ -9,30 +9,26 @@
 <!-- table -->
 <div class="ui-g ui-fluid">
   <div class="ui-g-12 ui-md-offset-1 ui-md-10" style="text-align: left;">
-    <h2>Welcome, {{ username | humanize}}</h2>
+    <h2>Welcome!</h2>
     <h4>Employee List</h4>
     <button pButton type="button" id="new-employee" label="New Employee" (click)="onShow('New')" style="width: auto !important; margin-bottom: 0.3em;"></button>
     <p-table [value]="employees" selectionMode="single" [paginator]="true" [rows]="5" >
       <ng-template pTemplate="header">
           <tr >
-              <th>ID #</th>
               <th>First Name</th>
               <th>Last Name</th>
-              <th>Country</th>
-              <th>Nationality</th>
-              <th>Company</th>
-              <th>Designation</th>
-              <th>Work Exp</th>
-              <th></th>
+              <th>Gender</th>
+              <th>Actions</th>
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData>
           <tr [pSelectableRow]="rowData" (click)="onShow('Update', rowData)">
-              <td *ngFor="let col of cols;">
-                {{ rowData[col.field] }}
-              </td>
+              <td>{{rowData.firstName}}</td>
+              <td>{{rowData.lastName}}</td>
+              <td>{{rowData.gender}}</td>
               <td>
-                  <button pButton type="button" id="delete-employee" label="Delete" (click)="onDeleteRow($event, rowData)" style="width: auto !important; margin: 0.3em;z-index: 100000"></button>
+                  <button pButton type="button" id="edit-employee" label="Edit"  (click)="onShow('Update', rowData)"></button>
+                  <button pButton type="button" id="delete-employee" label="Delete" (click)="onDeleteRow($event, rowData)"></button>
               </td>
           </tr>
       </ng-template>
@@ -50,7 +46,7 @@
   <p-sidebar [(visible)]="display" [showCloseIcon]="true" [dismissible]="false">
     <p-messages [(value)]="msgs"></p-messages>
     <form [formGroup]="sidebarForm">
-      <h2>Lead Information</h2>
+      <h2>Employee Information</h2>
 
       <span>First Name</span>
       <input type="text" pInputText formControlName="firstName" #firstName/>
@@ -58,20 +54,20 @@
       <span>Last Name</span>
       <input type="text" pInputText formControlName="lastName" />
 
-      <span>Country</span>
-      <input type="text" pInputText formControlName="country" />
+      <span>Gender</span>
+      <p-dropdown
+            [options]="gender"
+            [style]="{'width': '100%'}"
+            formControlName="gender"></p-dropdown>
+
+      <span>Birth Date</span>
+      <input type="text" pInputText formControlName="birthDate" />
 
       <span>Nationality</span>
-      <input type="text" pInputText formControlName="nationality" />
-
-      <span>Company</span>
-      <input type="text" pInputText formControlName="company" />
-
-      <span>Designation</span>
-      <input type="text" pInputText formControlName="designation" />
-
-      <span>Work Experience</span>
-      <input type="text" pInputText formControlName="workExp" />
+      <p-dropdown
+          [options]="nationality"
+          [style]="{'width': '100%'}"
+          formControlName="nationality"></p-dropdown>
 
       <div class="ui-g" style="margin-top: 20px;">
         <button

@@ -2,10 +2,8 @@ export interface Employee {
     id: number;
     firstName: string;
     lastName: string;
-    country: string;
+    birthDate: string;
+    gender: string;
     nationality: string;
-    company: string;
-    designation: string;
-    workExp: number;
   }
   
