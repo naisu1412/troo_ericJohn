@@ -6,7 +6,7 @@ import { EmployeeDetails } from "e2e/src/model/interface/employee_details.interf
  * Issues Found in app:
  * Bug when clicking clear then updating, does not able to save correctly
  * Bug when selecting Japanese
-*/
+ */
 describe("Employee CRUD", async () => {
   let dashboardPage: DashboardPage;
 
@@ -23,7 +23,7 @@ describe("Employee CRUD", async () => {
     last_name: "DJ",
     birth_date: "02/08/1996",
     gender: "Secret",
-    nationality: "Chinese", //
+    nationality: "Chinese",
   };
 
   beforeAll(async () => {
@@ -49,8 +49,6 @@ describe("Employee CRUD", async () => {
   });
 
   it("should be able to delete an Employee record", async () => {
-    dashboardPage.deleteEmploye(empRecord_updated, 2);
+    dashboardPage.deleteEmployee(2);
   });
-
-  //TODO: create assertion for the dialog after creation and update
 });
